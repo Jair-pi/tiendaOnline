@@ -2,6 +2,14 @@
 
 require 'config/config.php';
 require 'config/database.php';
+require 'vendor/autoload.php';
+
+MercadoPago\SDK::setAccessToken(TOKEN_MP);
+
+$preference = new MercadoPago\Preference();
+$productos_mp = array();
+
+
 $db = new Database();
 $con = $db->conectar();
 
@@ -22,7 +30,7 @@ if($productos != null){
     header("Location: index.php");
     exit;
 }
-
+ 
 
 ?>
 
@@ -34,13 +42,17 @@ if($productos != null){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda Online</title>
 
+    <!--Bootstrap CSS-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
     <link href="css/estilos.css"rel="stylesheet">
+
+    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
+
 <body>
-    
+    <!--Barra de navegacion-->
     <header>
         <div class="navbar navbar-expand-lg navbar-dark bg-dark ">
             <div class="container">
@@ -75,7 +87,17 @@ if($productos != null){
         <div class="row">
             <div class="col-6">
                 <h4>Detalles de pago</h4>
+                <div class="row">
+            <div class="col-12">
                 <div id="paypal-button-container"></div>
+            </div>
+                </div>
+
+                <div class="row">
+            <div class="col-12">
+                <div class="checkout-btn"></div>
+            </div>
+                </div>
             </div>
 
             <div class="col-6">
@@ -102,7 +124,18 @@ if($productos != null){
                                     $cantidad = $producto ['cantidad'];
                                     $precio_desc = $precio - (($precio * $descuento) / 100);
                                     $subtotal = $cantidad * $precio_desc;
-                                    $total += $subtotal; 
+                                    $total += $subtotal;
+                                    
+                                    $item = new MercadoPago\Item();
+                                    $item->id = $_id;
+                                    $item->title = $nombre;
+                                    $item->quantity = $cantidad;
+                                    $item->unit_price = $precio_desc;
+                                    $item->currency_id = "PEN";
+
+                                    array_push($productos_mp, $item);
+                                    unset($item);
+
                                 ?>
                             
                             <tr>
@@ -128,12 +161,27 @@ if($productos != null){
         </div>
     </main>
 
+    <?php
+
+    $preference->items = $productos_mp;
+    $preference->back_urls = array(
+        "success" => "https://localhost/tiendaOnline/captura.php",
+        "failure" => "https://localhost/tiendaOnline/fallo.php",
+    );
+    
+    $preference->auto_return = "approved";
+    $preference->binary_mode = true;
+    
+    $preference->save();
+ 
+    ?>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
 integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-<script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>"></script>
+
 
 <script>
         paypal.Buttons({
@@ -168,6 +216,8 @@ integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+
                         body: JSON.stringify({
                             detalles: detalles 
                         })
+                    }).then (function(response){
+                        window.location.href = "completado.php?key=" + detalles['id']; //$datos ['detalles']['id'];
                     })
                 });
             },
@@ -177,7 +227,23 @@ integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+
                 console.log(data);
             }
         }).render ('#paypal-button-container');
+
+        const mp = new MercadoPago('TEST-0e09380c-59b6-437a-abb1-8ef2ba4f67fa', {
+            locale: 'es-PE'
+        });
+
+        mp.checkout({
+            preference: {
+                id: '<?php echo $preference->id; ?>'
+            },
+            render: {
+                container: '.checkout-btn',
+                label: 'Pagar con Mercado Pago'
+            }
+        })
+
     </script>
+
 
 </body>
 </html>

@@ -49,6 +49,8 @@ if($id == '' || $token == ''){
             }
             $dir->close();
         }
+
+
         }else{
             echo 'Error al procesar la petición';
         exit;
@@ -162,9 +164,15 @@ if($id == '' || $token == ''){
                     <p class="lead">
                         <?php echo $descripcion; ?>
                     </p>
+
+
+                    <div class="col-3 my-3">
+                            Cantidad:<input class="form-control" id="cantidad" name="cantidad" type="number" min="1" max="10" value="1">
+                    </div>
+
                     <div class="d-grid gap-3 col-10 mx-auto">
                         <button class="btn btn-primary" type="button">Comprar ahora</button>
-                        <button class="btn btn-outline-primary" type="button" onclick="addProducto(<?php echo $id; ?>, '<?php echo $token_tmp; ?>')">Agregar al carrito</button>
+                        <button class="btn btn-outline-primary" type="button" onclick="addProducto(<?php echo $id; ?>, cantidad.value, '<?php echo $token_tmp; ?>')">Agregar al carrito</button>
                     </div>
                 </div>
             </div>
@@ -176,10 +184,11 @@ if($id == '' || $token == ''){
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <script>
-        function addProducto(id, token){
+        function addProducto(id, cantidad, token){
             let url = 'clases/carrito.php'
             let formData = new FormData()
             formData.append('id', id)
+            formData.append('cantidad', cantidad)
             formData.append('token', token)
 
             fetch(url, {
