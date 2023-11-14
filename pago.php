@@ -4,6 +4,7 @@ require 'config/config.php';
 require 'config/database.php';
 require 'vendor/autoload.php';
 
+
 MercadoPago\SDK::setAccessToken(TOKEN_MP);
 
 $preference = new MercadoPago\Preference();
@@ -46,6 +47,8 @@ if($productos != null){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="css/estilos.css"rel="stylesheet">
+    <link href="css/all.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ab74bfb456.js" crossorigin="anonymous"></script>
 
     <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>"></script>
     <script src="https://sdk.mercadopago.com/js/v2"></script>
@@ -73,7 +76,7 @@ if($productos != null){
                             <a href="#" class="nav-link">Contacto</a>
                         </li>
                     </ul>
-                        <a href="carrito.php" class="btn btn-primary"> Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span></a>
+                        <a href="carrito.php" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i> Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span></a>
                     
                 </div>
             </div>

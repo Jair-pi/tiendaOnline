@@ -33,6 +33,8 @@ if($productos != null){
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="css/all.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ab74bfb456.js" crossorigin="anonymous"></script>
 
     <link href="css/estilos.css"rel="stylesheet">
 </head>
@@ -58,7 +60,7 @@ if($productos != null){
                             <a href="#" class="nav-link">Categoria</a>
                         </li>
 
-                        <a href="carrito.php" class="btn btn-primary"> Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span></a>
+                        <a href="carrito.php" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i> Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span></a>
                     </ul>
                 </div>
             </div>
@@ -106,7 +108,7 @@ if($productos != null){
                                 <div id="subtotal_<?php echo $_id; ?>" name="subtotal[]"><?php echo MONEDA . number_format($subtotal, 2, '.', ','); ?></div>
                             </td>
                             <td>
-                                <a id="eliminar" class="btn btn-warning btn-sm" data-bs-id="<?php echo $_id; ?>" data-bs-toggle="modal" data-bs-target="#eliminaModal">Eliminar</a>
+                                <a id="eliminar" class="btn btn-warning btn-sm" data-bs-id="<?php echo $_id; ?>" data-bs-toggle="modal" data-bs-target="#eliminaModal"><i class="fa-solid fa-trash"></i> Eliminar</a>
                             </td>
                         </tr>
                         <?php } ?>
@@ -146,7 +148,7 @@ if($productos != null){
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button id="btn-elimina" type="button" class="btn btn-danger" onclick="eliminar()">Eliminar</button>
+                    <a><button id="btn-elimina" type="button" class="btn btn-danger" onclick="eliminar()"><i class="fa-solid fa-trash"></i> Eliminar</button></a>
                 </div>
             </div>
         </div>

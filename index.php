@@ -2,6 +2,7 @@
 
 require 'config/config.php';
 require 'config/database.php';
+
 $db = new Database();
 $con = $db->conectar();
 
@@ -9,9 +10,7 @@ $sql = $con->prepare("SELECT id, nombre, precio FROM productos WHERE activo=1");
 $sql->execute();
 $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-//session_destroy();
 
-//print_r($_SESSION);
 
 ?>
 
@@ -28,6 +27,8 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="css/all.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ab74bfb456.js" crossorigin="anonymous"></script>
 
     <link href="css/estilos.css"rel="stylesheet">
 </head>
@@ -53,9 +54,16 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                             <a href="#" class="nav-link">Categoria</a>
                         </li>
                     </ul>
-                        <a href="checkout.php" class="btn btn-primary">
+                        <a href="checkout.php" class="btn btn-primary me-2"><i class="fa-solid fa-cart-shopping"></i> 
                             Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
                         </a>
+
+                        <?php if(isset($_SESSION['user_id'])){ ?>
+                        <a href="#" class="btn btn-success"><i class="fas fa-user"></i> <?php echo $_SESSION['user_name']; ?></a>
+                        <?php }else { ?>
+                            <a href="login.php" class="btn btn-success"><i class="fas fa-user"></i> Ingresar</a>
+                        <?php } ?>
+
                     
                 </div>
             </div>
