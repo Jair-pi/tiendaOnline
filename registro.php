@@ -41,17 +41,34 @@ if(!empty($_POST)){
 
     if(count($errors) == 0){
 
-    $id = registraCliente([$nombres, $apellidos, $email, $telefono, $dni], $con);
-    
-    if($id > 0){
-        $pass_hash = password_hash($password, PASSWORD_DEFAULT);
-        $token = generarToken();
-        if(!registraUsuario([$usuario, $pass_hash, $token, $id], $con)){
-            $errors[] = "Error al registrar usuario";
-        };
-    }else{
-        $errors[] = "Error al registrar cliente";
-    }
+        $id = registraCliente([$nombres, $apellidos, $email, $telefono, $dni], $con);
+        
+        if($id > 0){
+
+            require 'clases/Mailer.php';
+            $mailer = new Mailer();
+            $token = generarToken();
+
+            $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+
+            $idUsuario = registraUsuario([$usuario, $pass_hash, $token, $id], $con);
+            if($idUsuario > 0){
+
+                $url = SITE_URL . '/activa_cliente.php?id=' . $idUsuario . '&token=' . $token;
+                $asunto = "Activa tu cuenta - Tienda Online";
+                $cuerpo = "Estimado $nombres: <br> Para continuar con el proceso de registro es indispensable dar click en la siguiente liga <a href='$url'>Activar cuenta</a>";
+
+                if($mailer->enviarEmail($email, $asunto, $cuerpo)){
+                    echo "Para terminar el proceso de registro siga las instrucciones que le hemos enviado a la dirección de correo electrónico $email";
+                    exit;
+                }
+
+            }else{
+                $errors[] = "Error al registrar usuario";
+            }
+        }else{
+            $errors[] = "Error al registrar cliente";
+        }
 }
 
 }

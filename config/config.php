@@ -1,10 +1,27 @@
 <?php 
 
-define("CLIENT_ID", "ARCKna_14IG8yZPWqJHibA1FiGqUSl1x8bfjDazzcm7xQijdJzI9zRa8qA1lCXZuV4ICFmCy3Y9LeoCK");
-define("TOKEN_MP", "TEST-517884722182097-111116-01c3a3d2172266ef0e1e4f92fb63ea99-1544320337");
-//define("CURRENCY", "PEN");
+//configuracion para el sistema
+define("SITE_URL", "https://localhost/tiendaOnline");
 define("KEY_TOKEN", "APR.wqc-354*");
+
+
+//configuracion para paypal
+define("CLIENT_ID", "ARCKna_14IG8yZPWqJHibA1FiGqUSl1x8bfjDazzcm7xQijdJzI9zRa8qA1lCXZuV4ICFmCy3Y9LeoCK");
+//define("CURRENCY", "PEN");
 define("MONEDA", "S/");
+
+
+//configuracion para mercado Pago
+define("TOKEN_MP", "TEST-517884722182097-111116-01c3a3d2172266ef0e1e4f92fb63ea99-1544320337");
+
+
+
+//datos para envio de correo electronico
+define("MAIL_HOST", "smtp.gmail.com");
+define("MAIL_USER", "917lenin.8@gmail.com");
+define("MAIL_PASS", "tcwd dpxl tilk wdax");
+define("MAIL_PORT", "465");
+
 
 session_start();
 

@@ -13,26 +13,29 @@ $mail = new PHPMailer(true);
 
 try {
     $mail->SMTPDebug = SMTP::DEBUG_SERVER; //SMTP::DEBUG_OFF;
-    $mail->isSMTP();                                            
-    $mail->Host       = 'smtp.gmail.com';                     
-    $mail->SMTPAuth   = true;                                   
-    $mail->Username   = 'arevalojair917@gmail.com';                     
-    $mail->Password   = 'ELPUERTO.252423';                               
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            
-    $mail->Port       = 465;            
+    $mail->isSMTP();
+    $mail->Host       = MAIL_HOST;
+    $mail->SMTPAuth   = true;
+    $mail->Username   = MAIL_USER;
+    $mail->Password   = MAIL_PASS;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port       = MAIL_PORT;
 
 
-    $mail->setFrom('arevalojair917@gmail.com', 'TIENDA RC');
-    $mail->addAddress('917lenin.8@gmail.com', 'COMPRAS RC');  
+    $mail->setFrom('917lenin.8@gmail.com', 'TIENDA RC');
+
+    $mail->addAddress('arevalojair917@gmail.com', 'COMPRAS RC');
+    
+    $mail->addReplyTo('arevalojair917@gmail.com');
 
 
     $mail->isHTML(true);                                  
-    $mail->Subject = 'Detalles de su compra';
+    $mail->Subject = 'Detalles de su pedido';
 
     $cuerpo = '<h4>Gracias por su compra</h4>';
-    $cuerpo .= '<p>El ID de su compra es <b>' . $id_transaccion . '</b></p>';
+    $cuerpo .= '<p>El ID de su compra es: <b>' . $id_transaccion . '</b></p>';
 
-    $mail->Body    = ($cuerpo);
+    $mail->Body    = utf8_decode($cuerpo);
     $mail->AltBody = 'Le enviamos los detalles de su compra.';
 
     $mail->setLanguage('es', '../phpmailer/language/phpmailer.lang-es.php');
