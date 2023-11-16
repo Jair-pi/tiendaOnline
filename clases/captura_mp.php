@@ -6,30 +6,25 @@ require '../config/database.php';
 $db = new Database();
 $con = $db->conectar();
 
-$json = file_get_contents('php://input');
-$datos = json_decode($json, true);
+$id_transaccion = isset($_GET['payment_id']) ? $_GET['payment_id'] : '';
+$status = isset($_GET['status']) ? $_GET['status'] : '';
 
 
-if(is_array($datos)){
+if($id_transaccion != ''){
 
+    $fecha = date("Y-m-d H:i:s");
+    $monto = isset($_SESSION['carrito']['total']) ? $_SESSION['carrito']['total'] : 0;
     $id_cliente = $_SESSION['user_cliente'];
     $sql = $con->prepare("SELECT email FROM clientes WHERE id=? AND estatus=1");
     $sql->execute([$id_cliente]);
     $row_cliente = $sql->fetch(PDO::FETCH_ASSOC);
-
-    $id_transaccion = $datos ['detalles']['id'];
-    $total = $datos ['detalles']['purchase_units'][0]['amount']['value'];
-    $status = $datos ['detalles']['status'];
-    $fecha = $datos ['detalles']['update_time'];
-    $fecha_nueva = date('Y-m-d H:i:s', strtotime($fecha));
-    //$email = $datos ['detalles']['payer']['email_address'];
     $email = $row_cliente['email'];
-    //$id_cliente = $datos ['detalles']['payer']['payer_id'];
-    
-    $sql = $con->prepare("INSERT INTO compra (id_transaccion, fecha, status, email, id_cliente, total, medio_pago) VALUES (?,?,?,?,?,?,?)");
 
-    $sql->execute([$id_transaccion, $fecha_nueva, $status, $email, $id_cliente, $total, 'paypal']);
+
+    $comando = $con->prepare("INSERT INTO compra (id_transaccion, fecha, status, email, id_cliente, total, medio_pago) VALUES (?,?,?,?,?,?,?)");
+    $comando->execute([$id_transaccion, $fecha, $status, $email, $id_cliente, $monto, 'MP']);
     $id = $con->lastInsertId(); 
+    
 
     if( $id > 0){
 
@@ -47,7 +42,7 @@ if(is_array($datos)){
                 $precio_desc = $precio - (($precio * $descuento) / 100);
 
                 $sql_insert = $con->prepare("INSERT INTO detalle_compra (id_compra, id_producto, nombre, precio, cantidad) VALUES (?,?,?,?,?)");
-                $sql_insert->execute([$id, $clave, $row_prod ['nombre'], $precio_desc, $cantidad]); 
+                $sql_insert->execute([$id, $row_prod ['id'], $row_prod ['nombre'], $precio_desc, $cantidad]); 
 
             }
             require 'Mailer.php';
@@ -63,3 +58,18 @@ if(is_array($datos)){
     }
 
 }
+
+/*
+$payment = $_GET['payment_id'];
+$status = $_GET['status'];
+$payment_type = $_GET['payment_type'];
+$order_id = $_GET['merchant_order_id'];
+
+echo "<h3>Pago exitoso</h3>";
+
+echo $payment.'<br>';
+echo $status.'<br>';
+echo $payment_type.'<br>';
+echo $order_id.'<br>';
+
+unset($_SESSION['carrito'])*/

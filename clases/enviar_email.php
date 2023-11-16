@@ -22,7 +22,7 @@ try {
     $mail->Port       = MAIL_PORT;
 
 
-    $mail->setFrom('917lenin.8@gmail.com', 'TIENDA RC');
+    $mail->setFrom('917lenin.8@gmail.com', 'RomedilComputer');
 
     $mail->addAddress('arevalojair917@gmail.com', 'COMPRAS RC');
     

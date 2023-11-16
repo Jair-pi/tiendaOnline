@@ -25,7 +25,7 @@ if($productos != null){
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,32 +40,7 @@ if($productos != null){
 </head>
 <body>
     
-    <header>
-        <div class="navbar navbar-expand-lg navbar-dark bg-dark ">
-            <div class="container">
-            <a href="#" class="navbar-brand">
-                <strong>Tienda Online</strong>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-                <div class="collapse navbar-collapse" id="navbarHeader">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link active">Catalogo</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Categoria</a>
-                        </li>
-
-                        <a href="carrito.php" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i> Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span></a>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header>
+    <?php include 'menu.php'; ?>
 
     <main>
         <!--Contenido-->
@@ -128,7 +103,12 @@ if($productos != null){
             <?php if($lista_carrito != null) { ?>
             <div class="row">
                 <div class="col-md-5 offset-md-7 d-grid gap-2">
-                    <a href="pago.php" class="btn btn-primary btn-lg">Realizar pago</a>
+                    <?php if(isset($_SESSION['user_cliente'])){ ?>
+                        <a href="pago.php" class="btn btn-primary btn-lg">Realizar pago</a>
+                    <?php } else { ?>
+                        <a href="login.php?pago" class="btn btn-primary btn-lg">Realizar pago</a>
+                    <?php } ?>
+
                 </div>
             </div>
             <?php }?>

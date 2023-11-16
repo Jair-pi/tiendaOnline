@@ -1,4 +1,4 @@
-<?php
+
 
 require 'vendor/autoload.php';
 
@@ -28,9 +28,9 @@ $preference->save();
 
 
 ?>
-
+<!--
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,7 +52,7 @@ $preference->save();
 
         mp.checkout({
             preference: {
-                id: '<?php echo $preference->id; ?>'
+                id: '<?php //echo $preference->id; ?>'
             },
             render: {
                 container: '.checkout-btn',
@@ -63,3 +63,4 @@ $preference->save();
 
 </body>
 </html>
+    -->

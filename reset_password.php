@@ -1,31 +1,50 @@
 <?php
-
-//pantalla para login
-
+//minuto 27
 require 'config/config.php';
 require 'config/database.php';
 require 'clases/clienteFunciones.php';
 
+$user_id = $_GET['id'] ?? $_POST['user_id'] ?? '';
+$token = $_GET['token'] ?? $_POST['token'] ?? '';
+
+if($user_id == '' || $token == ''){
+    header("Location: index.php");
+    exit;
+}
+
 $db = new Database();
 $con = $db->conectar();
 
-$proceso = isset($_GET['pago']) ? 'pago' : 'login';
-
 $errors = [];
 
+if(!verificaTokenRequest($user_id, $token, $con)){
+    echo "No se pudo verificar la información";
+    exit;
+}
+
 if(!empty($_POST)){
-
-    $usuario = trim($_POST['usuario']);
+    
     $password = trim($_POST['password']);
-    $proceso = $_POST['proceso'] ?? 'login';
+    $repassword = trim($_POST['repassword']);
 
-    if(esNulo([$usuario, $password])){
+    if(esNulo([$user_id, $token, $password, $repassword])){
         $errors [] = "Debe llenar todos los campos";
     }
 
-    if(count($errors) == 0){
-    $errors[] = login($usuario, $password, $con, $proceso);
+    if(!validaPassword($password, $repassword)){
+        $errors [] = "Las contraseñas no coinciden";
     }
+
+    if(count($errors) == 0){
+        $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+        if(actualizaPassword($user_id, $pass_hash, $con)){
+            echo "Contraseña modificada.<br><a href='login.php'>Iniciar sesión</a>";
+            exit;
+        }else{
+            $errors[] = "Error al modificar contraseña. Intentalo nuevamente.";
+        }
+    }
+    
 
 }
 
@@ -36,7 +55,7 @@ if(!empty($_POST)){
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -80,38 +99,36 @@ if(!empty($_POST)){
 
     <!--Contenido-->
     <main class="form-login m-auto pt-4">
-        <h2>Iniciar sesión</h2>
+        <h3>Cambiar contraseña</h3>
 
         <?php mostrarMensajes($errors); ?>
 
-        <form class= "row g-3" action="login.php" method="post" autocomplete="off">
+        <form action="reset_password.php" method="post" class="row g-3" autocomplete="off">
 
-            <input type="hidden" name="proceso" value="<?php echo $proceso; ?>">
+        <input type="hidden" name="user_id" id="user_id" value="<?=$user_id;?>" />
+        <input type="hidden" name="token" id="token" value="<?=$token;?>" />
 
-            <div class="form-floating">
-                <input class="form-control" type="text" name="usuario" id="usuario" placeholder="Usuario" required>
-                <label for="usuario">Usuario</label>
-            </div>
 
-            <div class="form-floating">
-                <input class="form-control" type="password" name="password" id="password" placeholder="Contraseña" required>
-                <label for="password">Contraseña</label>
-            </div>
+        <div class="form-floating">
+                <input class="form-control" type="password" name="password" id="password" placeholder="Nueva contraseña" required>
+                <label for="password">Nueva contraseña</label>
+        </div>
 
-            <div class="col-12">
-                <a href="recupera.php">¿Olvidaste tu contraseña?</a>
-            </div>
+        <div class="form-floating">
+                <input class="form-control" type="password" name="repassword" id="repassword" placeholder="Confirmar contraseña" required>
+                <label for="repassword">Confirmar contraseña</label>
+        </div>
 
-            <div class="d-grid gap-3 col-12">
-                <button type="submit" class="btn btn-primary">Ingresar</button>
-            </div>
-            
-            <hr>
+        <div class="d-grid gap-3 col-12">
+                <button type="submit" class="btn btn-primary">Continuar</button>
+        </div>
 
-            <div class="col-12">
-                ¿No tiene cuenta? <a href="registro.php">Registrate aquí</a>
-            </div>
+        <div class="col-12">
+                <a href="login.php">Iniciar sesión</a>
+        </div>
+
         </form>
+
     </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
