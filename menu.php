@@ -1,5 +1,9 @@
 <!--menu de navegacion-->
 <script src="https://kit.fontawesome.com/ab74bfb456.js" crossorigin="anonymous"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
 <header>
         <div class="navbar navbar-expand-lg navbar-dark bg-dark ">
             <div class="container">
@@ -31,7 +35,9 @@
                                     <i class="fas fa-user"></i> &nbsp; <?php echo $_SESSION['user_name']; ?>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="btn_session">
+                                    <li><a class="dropdown-item" href="compras.php">Mis compras</a></li>
                                     <li><a class="dropdown-item" href="logout.php">Cerrar sessión</a></li>
+
                                 </ul>
                                 </div>
 

@@ -1,5 +1,23 @@
 <?php 
 
+$patch = dirname(__FILE__);
+
+require_once $patch . '/database.php';
+require_once $patch . '/../admin/clases/cifrado.php';
+
+$db = new Database();
+$con = $db->conectar();
+
+$sql = "SELECT nombre, valor FROM configuracion";
+$resultado = $con->query($sql);
+$datos = $resultado->fetchAll(PDO::FETCH_ASSOC);
+
+$config = [];
+
+foreach($datos as $dato){
+    $config[$dato['nombre']] = $dato['valor'];
+}
+
 //configuracion para el sistema
 define("SITE_URL", "https://localhost/tiendaOnline");
 define("KEY_TOKEN", "APR.wqc-354*");
@@ -17,10 +35,10 @@ define("TOKEN_MP", "TEST-517884722182097-111116-01c3a3d2172266ef0e1e4f92fb63ea99
 
 
 //datos para envio de correo electronico
-define("MAIL_HOST", "smtp.gmail.com");
-define("MAIL_USER", "917lenin.8@gmail.com");
-define("MAIL_PASS", "tcwd dpxl tilk wdax");
-define("MAIL_PORT", "465");
+define("MAIL_HOST", $config['correo_smtp']);
+define("MAIL_USER", $config['correo_email']);
+define("MAIL_PASS", descifrar($config['correo_password']));
+define("MAIL_PORT", $config['correo_puerto']);
 
 
 session_start();
@@ -30,3 +48,5 @@ if(isset($_SESSION['carrito']['productos'])){
     $num_cart = count($_SESSION['carrito']['productos']);
 }
 ?>
+
+<!--tcwd dpxl tilk wdax-->

@@ -1,7 +1,7 @@
 <?php
 
-require '../config/config.php';
-require '../config/database.php';
+require_once '../config/config.php';
+require_once '../config/database.php';
 
 $db = new Database();
 $con = $db->conectar();
@@ -50,7 +50,7 @@ if(is_array($datos)){
                 $sql_insert->execute([$id, $clave, $row_prod ['nombre'], $precio_desc, $cantidad]); 
 
             }
-            require 'Mailer.php';
+            require_once 'Mailer.php';
 
             $asunto = "'Detalles de su pedido";
             $cuerpo = '<h4>Gracias por su compra</h4>';

@@ -10,9 +10,9 @@ class Mailer{
     function enviarEmail($email, $asunto, $cuerpo){
 
         require_once __DIR__ . '/../config/config.php';
-        require __DIR__ . '/../phpmailer/src/PHPMailer.php';
-        require __DIR__ . '/../phpmailer/src/SMTP.php';
-        require __DIR__ . '/../phpmailer/src/Exception.php';
+        require_once __DIR__ . '/../phpmailer/src/PHPMailer.php';
+        require_once __DIR__ . '/../phpmailer/src/SMTP.php';
+        require_once __DIR__ . '/../phpmailer/src/Exception.php';
 
         $mail = new PHPMailer(true);
 
@@ -35,7 +35,7 @@ class Mailer{
             $mail->isHTML(true);                                  
             $mail->Subject = $asunto;
 
-            $mail->Body    = utf8_decode($cuerpo);
+            $mail->Body = mb_convert_encoding($cuerpo, 'ISO-8859-1', 'UTF-8');
 
             $mail->setLanguage('es', '../phpmailer/language/phpmailer.lang-es.php');
 

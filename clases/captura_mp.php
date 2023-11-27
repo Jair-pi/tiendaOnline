@@ -1,7 +1,7 @@
 <?php
 
-require '../config/config.php';
-require '../config/database.php';
+require_once '../config/config.php';
+require_once '../config/database.php';
 
 $db = new Database();
 $con = $db->conectar();
@@ -41,11 +41,11 @@ if($id_transaccion != ''){
                 $descuento = $row_prod ['descuento'];
                 $precio_desc = $precio - (($precio * $descuento) / 100);
 
-                $sql_insert = $con->prepare("INSERT INTO detalle_compra (id_compra, id_producto, nombre, precio, cantidad) VALUES (?,?,?,?,?)");
-                $sql_insert->execute([$id, $row_prod ['id'], $row_prod ['nombre'], $precio_desc, $cantidad]); 
+                $sql = $con->prepare("INSERT INTO detalle_compra (id_compra, id_producto, nombre, precio, cantidad) VALUES (?,?,?,?,?)");
+                $sql->execute([$id, $row_prod ['id'], $row_prod ['nombre'], $precio_desc, $cantidad]); 
 
             }
-            require 'Mailer.php';
+            require_once 'Mailer.php';
 
             $asunto = "'Detalles de su pedido";
             $cuerpo = '<h4>Gracias por su compra</h4>';
@@ -55,6 +55,7 @@ if($id_transaccion != ''){
             $mailer->enviarEmail($email, $asunto, $cuerpo);
         }
         unset($_SESSION['carrito']);
+        header("Location: " . SITE_URL . "/completado.php?key=" . $id_transaccion);
     }
 
 }

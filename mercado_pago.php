@@ -1,6 +1,6 @@
 
 
-require 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
 
 MercadoPago\SDK::setAccessToken('TEST-517884722182097-111116-01c3a3d2172266ef0e1e4f92fb63ea99-1544320337');

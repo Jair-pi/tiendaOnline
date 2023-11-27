@@ -1,8 +1,8 @@
 <?php
 
-require 'config/config.php';
-require 'config/database.php';
-require 'clases/clienteFunciones.php';
+require_once 'config/config.php';
+require_once 'config/database.php';
+require_once 'clases/clienteFunciones.php';
 
 $db = new Database();
 $con = $db->conectar();
@@ -50,7 +50,7 @@ if(!empty($_POST)){
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
