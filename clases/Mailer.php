@@ -35,7 +35,7 @@ class Mailer{
             $mail->isHTML(true);                                  
             $mail->Subject = $asunto;
 
-            $mail->Body = mb_convert_encoding($cuerpo, 'ISO-8859-1', 'UTF-8');
+            $mail->Body = utf8_encode($cuerpo);
 
             $mail->setLanguage('es', '../phpmailer/language/phpmailer.lang-es.php');
 
