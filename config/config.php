@@ -1,6 +1,6 @@
 <?php 
 
-$patch = dirname(__FILE__);
+$patch = dirname(__FILE__) . DIRECTORY_SEPARATOR;
 
 require_once $patch . '/database.php';
 require_once $patch . '/../admin/clases/cifrado.php';
@@ -48,7 +48,5 @@ if(isset($_SESSION['carrito']['productos'])){
     $num_cart = count($_SESSION['carrito']['productos']);
 }
 
-
-#<!--tcwd dpxl tilk wdax-->
 
 ?>

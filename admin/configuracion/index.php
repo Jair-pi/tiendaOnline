@@ -5,6 +5,17 @@ require_once '../config/config.php';
 require_once '../header.php';
 require_once '../clases/cifrado.php';
 
+
+if(!isset($_SESSION['user_type'])){
+    header('Location: ../index.php');
+    exit;
+}
+
+if($_SESSION['user_type'] != 'admin'){
+    header('Location: ../../index.php');
+    exit;
+}
+
 $db = new Database();
 $con = $db->conectar();
 
@@ -19,16 +30,13 @@ foreach($datos as $dato){
 }
 
 
-
-
 ?>
 
 <main>
     <div class="container-fluid px-4">
         <h1 class="mt-4">Configuración</h1>
 
-        <?php echo descifrar($config['correo_password']); ?>
-
+        <h5>Correo Electrónico</h5>
         <form action="guarda.php" method="post">
             <div class="row">
                 <div class="col-6">
@@ -60,8 +68,9 @@ foreach($datos as $dato){
                 </div>
             </div>
         </form>
-
+        <br>    
     </div>
+
 </main>
 
 <?php  require_once '../footer.php'; ?>

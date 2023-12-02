@@ -1,4 +1,8 @@
 <?php 
 
-//configuracion para el sistema
+session_start();
+
 define("ADMIN_URL", "https://localhost/tiendaOnline/admin/");
+
+
+?>
