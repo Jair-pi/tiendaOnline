@@ -10,12 +10,12 @@ $con = $db->conectar();
 
 $sql = "SELECT nombre, valor FROM configuracion";
 $resultado = $con->query($sql);
-$datos = $resultado->fetchAll(PDO::FETCH_ASSOC);
+$datosConfig = $resultado->fetchAll(PDO::FETCH_ASSOC);
 
 $config = [];
 
-foreach($datos as $dato){
-    $config[$dato['nombre']] = $dato['valor'];
+foreach($datosConfig as $datoConfig){
+    $config[$datoConfig['nombre']] = $datoConfig['valor'];
 }
 
 //configuracion para el sistema

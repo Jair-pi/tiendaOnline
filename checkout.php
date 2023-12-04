@@ -179,6 +179,10 @@ integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+
                             minimumFractionDigits: 2
                         }).format(total)
                         document.getElementById('total').innerHTML = '<?php echo MONEDA; ?>' + total
+                    }else{
+                        let inputCantidad = document.getElementById('cantidad_' + id)
+                        inputCantidad.value = data.cantidadAnterior
+                        alert("No hay suficientes productos")
                     }
                 })
         }

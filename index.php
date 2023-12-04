@@ -64,7 +64,9 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                                             hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>" 
                                             class="btn btn-primary">Detalles</a>
                                         </div>
-                                        <button class="btn btn-outline-success" type="button" onclick="addProducto(<?php echo $row['id']; ?>, '<?php echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>')">Agregar al carrito</button>
+                                        <button class="btn btn-outline-success" type="button" 
+                                        onclick="addProducto(<?php echo $row['id']; ?>, '<?php echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>')"
+                                        >Agregar al carrito</button>
                                 </div>
                             </div>
                         </div>
@@ -96,6 +98,8 @@ integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+
                         let elemento = document.getElementById("num_cart")
                         console.log(elemento) 
                         elemento.innerHTML = data.numero
+                    }else{
+                        alert("No hay suficientes productos")
                     }
                 })
         }

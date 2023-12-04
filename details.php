@@ -206,6 +206,8 @@ if ($id == '' || $token == '') {
                     if (data.ok) {
                         let elemento = document.getElementById("num_cart")
                         elemento.innerHTML = data.numero
+                    }else{
+                        alert("No hay suficientes productos")
                     }
                 })
         }
@@ -220,10 +222,10 @@ if ($id == '' || $token == '') {
 
             let idModelo = 0;
 
-            if(document.getElementById('modelos')){
+            if (document.getElementById('modelos')) {
                 idModelo = document.getElementById('modelos').value
             }
-            
+
             const cbxColores = document.getElementById('colores')
             const divColores = document.getElementById('div-colores')
 
@@ -254,14 +256,14 @@ if ($id == '' || $token == '') {
         function cargarVariante() {
 
             let idModelo = 0;
-            
-            if(document.getElementById('modelos')){
+
+            if (document.getElementById('modelos')) {
                 idModelo = document.getElementById('modelos').value
             }
 
             let idColor = 0;
-            
-            if(document.getElementById('colores')){
+
+            if (document.getElementById('colores')) {
                 idColor = document.getElementById('colores').value
             }
 

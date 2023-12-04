@@ -2,7 +2,9 @@
 
 require_once '../config/config.php';
 
-if(isset($_POST['id'])){
+$datos['ok'] = false;
+
+if (isset($_POST['id'])) {
 
     $id = $_POST['id'];
     $cantidad = isset($_POST['cantidad']) ? $_POST['cantidad'] : 1;
@@ -10,25 +12,25 @@ if(isset($_POST['id'])){
 
     $token_tmp = hash_hmac('sha1', $id, KEY_TOKEN);
 
-    if($token == $token_tmp &&  $cantidad > 0 && is_numeric($cantidad)){
+    if ($token == $token_tmp &&  $cantidad > 0 && is_numeric($cantidad)) {
 
-        if(isset($_SESSION['carrito']['productos'][$id])){
-
-            $_SESSION['carrito']['productos'][$id] += $cantidad;
-
-        }else{
-            $_SESSION['carrito']['productos'][$id] = $cantidad;
+        if (isset($_SESSION['carrito']['productos'][$id])) {
+            $cantidad += $_SESSION['carrito']['productos'][$id];
         }
 
-        $datos['numero'] = count($_SESSION['carrito']['productos']);
-        $datos['ok']=true;
+        $db = new Database();
+        $con = $db->conectar();
+        $sql = $con->prepare("SELECT stock FROM productos WHERE id=? AND activo=1 LIMIT 1");
+        $sql->execute([$id]);
+        $row = $sql->fetch(PDO::FETCH_ASSOC);
+        $stock = $row['stock'];
 
-    }else{
-        $datos['ok']=false;
-    }
-
-}else{
-    $datos['ok']=false;
+        if($stock >= $cantidad){
+            $datos['ok'] = true;
+            $_SESSION['carrito']['productos'][$id] = $cantidad;
+            $datos['numero'] = count($_SESSION['carrito']['productos']);
+        }
+    }  
 }
 
 echo json_encode($datos);

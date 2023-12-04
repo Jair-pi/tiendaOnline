@@ -47,7 +47,9 @@ if(is_array($datos)){
                 $precio_desc = $precio - (($precio * $descuento) / 100);
 
                 $sql_insert = $con->prepare("INSERT INTO detalle_compra (id_compra, id_producto, nombre, precio, cantidad) VALUES (?,?,?,?,?)");
-                $sql_insert->execute([$id, $clave, $row_prod ['nombre'], $precio_desc, $cantidad]); 
+                if($sql_insert->execute([$id, $clave, $row_prod ['nombre'], $precio_desc, $cantidad])){
+                    restarStock($row_prod ['id'], $cantidad, $con);
+                } 
 
             }
             require_once 'Mailer.php';
@@ -62,4 +64,9 @@ if(is_array($datos)){
         unset($_SESSION['carrito']);
     }
 
+}
+
+function restarStock($id, $cantidad, $con){
+    $sql = $con->prepare("UPDATE productos SET stock = stock - ? WHERE id = ?");
+    $sql->execute([$cantidad, $id]);
 }
