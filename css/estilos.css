@@ -5,3 +5,9 @@ main>.container{
 .form-login{
     max-width: 350px;
 }
+
+
+/*estilos para los botones*/
+.btn_carousel span{ 
+    background-color: rgba(0, 0, 0, 0.6);
+}
