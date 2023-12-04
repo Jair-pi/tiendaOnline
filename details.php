@@ -91,6 +91,7 @@ if ($id == '' || $token == '') {
 <body>
 
     <?php include 'menu.php'; ?>
+    <?php include 'chatbotUI/index.php'; ?>
 
     <main>
         <!--Contenido-->
