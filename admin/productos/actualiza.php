@@ -86,6 +86,35 @@ if($stm->execute([$nombre, $descripcion, $precio, $descuento, $stock, $categoria
             
         }
     }
+
+    $idVariante = $_POST['id_variante'] ?? [];
+    $modelo = $_POST['modelo'] ?? [];
+    $color = $_POST['color'] ?? [];
+    $precioVariante = $_POST['precio_variante'] ?? [];
+    $stockVariante = $_POST['stock_variante'] ?? [];
+
+    $sizeModelo = count($modelo);
+
+    if($sizeModelo == count($color) && $sizeModelo == count($precioVariante) && $sizeModelo == count($stockVariante)){
+        $sql = "INSERT INTO productos_variantes (id_producto, id_modelo, id_color, precio, stock) VALUES (?, ?, ?, ?, ?)";
+        $stm = $con->prepare($sql);
+
+        $sqlUpdate = "UPDATE productos_variantes SET id_modelo=?, id_color=?, precio=?, stock=? WHERE id=?";
+        $stmUpdate = $con->prepare($sqlUpdate);
+
+        for($i = 0; $i < $sizeModelo; $i++){
+            $idModelo = (int)$modelo[$i];
+            $idColor = (int)$color[$i];
+            $precio = $precioVariante[$i];
+            $stock = $stockVariante[$i];
+
+            if(isset($idVariante[$i])){
+                $stmUpdate->execute([$idModelo, $idColor, $precio, $stock, $idVariante[$i]]);
+            }else{
+                $stm->execute([$id, $idModelo, $idColor, $precio, $stock]);
+            }
+        }
+    }
 }
 
 header('Location: index.php');

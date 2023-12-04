@@ -40,7 +40,19 @@ while(($archivo = $dirInit->read()) !== false){
         $imagenes[] = $image;
     }
 }
+
 $dirInit->close();
+
+$resultado = $con->query("SELECT id, nombre FROM c_modelos");
+$modelos = $resultado->fetchAll(PDO::FETCH_ASSOC);
+
+$resultado = $con->query("SELECT id, nombre FROM c_colores");
+$colores = $resultado->fetchAll(PDO::FETCH_ASSOC);
+
+
+$sqlVariantes = $con->prepare("SELECT id, id_modelo, id_color, precio, stock FROM productos_variantes WHERE id_producto = ?");
+$sqlVariantes->execute([$id]);
+$variantes = $sqlVariantes->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -125,12 +137,93 @@ $dirInit->close();
                             <option value="">Seleccionar</option>
                             <?php foreach($categorias as $categoria){ ?>
                                 <option value="<?php echo $categoria['id']; ?>" <?php if($categoria['id'] == $producto['id_categoria']) echo 'selected'; ?>><?php echo $categoria['nombre']; ?></option>
-
-
-                                <?php } ?>
+                            <?php } ?>
                         </select>   
                 </div>
             </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <h4 class="me-4">Variantes</h4>
+                    <button type="button" class="btn btn-success btn-sm" id="agrega-variante">+ Variante</button>
+                </div>
+            </div>
+
+            <div id="contenido">
+                <?php foreach($variantes as $variante) { ?>
+                    <div class="row mb-3">
+
+                    <input type="hidden" name="id_variante[]" value="<?php echo $variante['id']; ?>">
+
+                        <div class="col">
+                            <label class="form-label">Modelo:</label>
+                            <select class="form-select" name="modelo[]">
+                                <option value="">Seleccionar</option>
+                                <?php foreach($modelos as $modelo){ ?>
+                                    <option value="<?php echo $modelo['id']; ?>" <?php if($modelo['id'] == $variante['id_modelo']) echo 'selected'; ?>><?php echo $modelo['nombre']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label class="form-label">Color:</label>
+                            <select class="form-select" name="color[]">
+                                <option value="">Seleccionar</option>
+                                <?php foreach($colores as $color){ ?>
+                                    <option value="<?php echo $color['id']; ?>" <?php if($color['id'] == $variante['id_color']) echo 'selected'; ?>><?php echo $color['nombre']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label class="form-label">Precio:</label>
+                                <input type="text" class="form-control" name="precio_variante[]" value="<?php echo $variante['precio']; ?>">
+                        </div>
+
+                        <div class="col">
+                            <label class="form-label">Stock:</label>
+                                <input type="text" class="form-control" name="stock_variante[]" value="<?php echo $variante['stock']; ?>">
+                        </div>
+                    </div>
+                <?php } ?>
+
+            </div>
+
+            <template id="plantilla_variante">
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label">Modelo:</label>
+                        <select class="form-select" name="modelo[]">
+                            <option value="">Seleccionar</option>
+                            <?php foreach($modelos as $modelo){ ?>
+                                <option value="<?php echo $modelo['id']; ?>"><?php echo $modelo['nombre']; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label class="form-label">Color:</label>
+                        <select class="form-select" name="color[]">
+                            <option value="">Seleccionar</option>
+                            <?php foreach($colores as $color){ ?>
+                                <option value="<?php echo $color['id']; ?>"><?php echo $color['nombre']; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label class="form-label">Precio:</label>
+                            <input type="text" class="form-control" name="precio_variante[]">
+                    </div>
+
+                    <div class="col">
+                        <label class="form-label">Stock:</label>
+                            <input type="text" class="form-control" name="stock_variante[]">
+                    </div>
+                </div>
+            </template>
 
             <button type="submit" class="btn btn-primary">Guarda</button>
         </form>
@@ -138,6 +231,7 @@ $dirInit->close();
     </div>
 
 </main>
+
 
 <script>
     ClassicEditor
@@ -160,6 +254,17 @@ $dirInit->close();
             }
         })
     }
+
+    const btnVariante = document.getElementById('agrega-variante')
+    btnVariante.addEventListener('click', agregaVariante);
+
+    function agregaVariante(){
+        const contenido = document.getElementById('contenido')
+        const plantilla = document.getElementById('plantilla_variante').content.cloneNode(true)
+
+        contenido.appendChild(plantilla)
+    }
+
 </script>
 
 <?php  require_once '../footer.php'; ?>
