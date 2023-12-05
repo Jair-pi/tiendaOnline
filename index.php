@@ -36,6 +36,7 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 
     <?php include 'menu.php'; ?>
 
+    <?php include 'chatbotUI/index.php'; ?>
     <main>
         <!--Contenido-->
         <div class="container">

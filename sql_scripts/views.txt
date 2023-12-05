@@ -1,0 +1,11 @@
+CREATE OR REPLACE VIEW productovariantes_vista
+AS
+    SELECT p_v.id, p_v.id_producto, c_m.nombre 'modelo', c_c.nombre 'color', p_v.precio, p_v.stock FROM `productos_variantes` p_v
+    INNER JOIN c_modelos c_m ON c_m.id = p_v.id_modelo
+    INNER JOIN c_colores c_c ON c_c.id = p_v.id_color;
+
+
+CREATE OR REPLACE VIEW productos_vista
+AS
+    SELECT	p.id, p.nombre, p.descripcion, p.precio, p.descuento, p.stock, cat.nombre 'categoría', p.activo FROM `productos` p
+    INNER JOIN categorias cat ON cat.id = p.id_categoria;

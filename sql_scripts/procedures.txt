@@ -1,0 +1,52 @@
+DELIMITER $$
+DROP PROCEDURE IF EXISTS contarProductos$$
+CREATE PROCEDURE contarProductos (IN categoria VARCHAR(40))
+BEGIN
+  SELECT COUNT(*) FROM productos 
+  INNER JOIN categorias cat ON cat.id = productos.id_categoria 
+  WHERE cat.nombre = categoria;
+END
+$$
+
+
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS regCliente$$
+CREATE PROCEDURE regCliente
+(
+	IN nombres varchar(80),
+    IN apellidos varchar(80),
+    IN email varchar(50),
+	IN telefono varchar(20),
+    IN dni varchar(20),
+    IN estatus tinyint(4),
+    OUT result INT
+)
+BEGIN
+	INSERT INTO clientes (nombres, apellidos, email, telefono, dni, estatus, fecha_alta) 					
+    VALUES(nombres,apellidos,email,telefono,dni, estatus, now());
+    SET result = LAST_INSERT_ID();
+END
+$$
+
+CALL regCliente ('PEPE','DIAS','PEPE@look.com','123456789','75717432',1, @id)
+
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS regUsuario$$
+CREATE PROCEDURE regUsuario
+(
+	IN usuario varchar(30),
+    IN password varchar(120),
+    IN token varchar(50),
+	IN id_cliente varchar(20),
+    OUT result int
+)
+BEGIN
+	INSERT INTO usuarios (usuario, password, token, id_cliente) 					
+    VALUES(usuario, password, token, id_cliente);
+    SET result = LAST_INSERT_ID();
+END
+$$
