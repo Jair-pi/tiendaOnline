@@ -28,17 +28,36 @@ function generarToken(){
 }
 
 function registraCliente(array $datos, $con){
-    $sql = $con->prepare("INSERT INTO clientes (nombres, apellidos, email, telefono, dni, estatus, fecha_alta) VALUES(?,?,?,?,?, 1, now())");
+    $sql = $con->prepare("CALL regCliente (?,?,?,?,?,1, @id)");
+    /* $sql = $con->prepare("INSERT INTO clientes (nombres, apellidos, email, telefono, dni, estatus, fecha_alta) VALUES(?,?,?,?,?, 1, now())"); */
     if($sql->execute($datos)){
-        return $con->lastInsertId();
+        //obtenemos el id de la última inserción mediante la consulta y el @id
+        $sql = $con->prepare("SELECT @id");
+        $sql->execute();
+        $row = $sql->fetch(PDO::FETCH_ASSOC);
+
+        return $row['@id']; //<-- regresamos el id
+
+        /**
+         * Nota: en el caso de usar un procedimiento, no es posible obtener el id mediante $con->lastInsertId();
+         * eso debido a que no es una inserción directa a la tabla, sino mediante un procedimiento almacenado.
+         * Por lo tanto, se debe obtener el id mediante una consulta.
+         */
+
+        //return $con->lastInsertId();
     }
     return 0;
 }
 
 function registraUsuario(array $datos, $con){
-    $sql = $con->prepare("INSERT INTO usuarios (usuario, password, token, id_cliente) VALUES (?,?,?,?)");
+    $sql = $con->prepare("CALL regUsuario (?,?,?,?,@id)");
+    /* $sql = $con->prepare("INSERT INTO usuarios (usuario, password, token, id_cliente) VALUES (?,?,?,?)"); */
     if($sql->execute($datos)){
-        return $con->lastInsertId();;
+        $sql = $con->prepare("SELECT @id");
+        $sql->execute();
+        $row = $sql->fetch(PDO::FETCH_ASSOC);
+        return $row['@id'];
+        //return $con->lastInsertId();;
     }
     return 0;
 }
