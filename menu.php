@@ -26,8 +26,8 @@
                             <a href="#" class="nav-link">Categoria</a>
                         </li>
                     </ul>
-                        <a href="checkout.php" class="btn btn-primary btn-sm me-2"><i class="fa-solid fa-cart-shopping"></i> 
-                            Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
+                        <a href="checkout.php" class="btn btn-warning btn-sm me-2"><i class="fa-solid fa-cart-shopping"></i> 
+                             <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
                         </a>
 
                         <?php if(isset($_SESSION['user_id'])){ ?>

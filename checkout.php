@@ -86,7 +86,7 @@ if($productos != null){
                                 <div id="subtotal_<?php echo $_id; ?>" name="subtotal[]"><?php echo MONEDA . number_format($subtotal, 2, '.', ','); ?></div>
                             </td>
                             <td>
-                                <a id="eliminar" class="btn btn-warning btn-sm" data-bs-id="<?php echo $_id; ?>" data-bs-toggle="modal" data-bs-target="#eliminaModal"><i class="fa-solid fa-trash"></i> Eliminar</a>
+                                <a id="eliminar" class="btn btn-danger btn-sm" data-bs-id="<?php echo $_id; ?>" data-bs-toggle="modal" data-bs-target="#eliminaModal"><i class="fa-solid fa-trash"></i></a>
                             </td>
                         </tr>
                         <?php } ?>
@@ -109,7 +109,7 @@ if($productos != null){
                     <?php if(isset($_SESSION['user_cliente'])){ ?>
                         <a href="pago.php" class="btn btn-primary btn-lg">Realizar pago</a>
                     <?php } else { ?>
-                        <a href="login.php?pago" class="btn btn-primary btn-lg">Realizar pago</a>
+                        <a href="login.php?pago" class="btn btn-primary btn-lg"><i class="fa-solid fa-cash-register"></i> Realizar pago</a>
                     <?php } ?>
 
                 </div>
