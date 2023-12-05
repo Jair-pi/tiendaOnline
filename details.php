@@ -170,16 +170,16 @@ if ($id == '' || $token == '') {
                     </div>
 
 
-                    <div class="col-3 my-3">
+                    <div class="col-2 my-3">
                         Cantidad:<input class="form-control" id="cantidad" name="cantidad" type="number" min="1" max="10" value="1">
                     </div>
 
-                    <div class="col-3 my-3">
+                    <div class="col-2 my-3">
                         <input class="form-control" id="nuevo_precio">
                     </div>
 
                     <div class="d-grid gap-3 col-10 mx-auto">
-                        <button class="btn btn-primary" type="button">Comprar ahora</button>
+                        
                         <button class="btn btn-outline-primary" type="button" onclick="addProducto(<?php echo $id; ?>, cantidad.value, '<?php echo $token_tmp; ?>')">Agregar al carrito</button>
                     </div>
                 </div>

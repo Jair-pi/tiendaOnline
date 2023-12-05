@@ -83,18 +83,18 @@ if($productos != null){
                                 <input type="number" min="1" max="10" step="1" value="<?php echo $cantidad ?>" size="5" id="cantidad_<?php echo $_id; ?>" onchange="actualizaCantidad(this.value, <?php echo $_id; ?>)">
                             </td>
                             <td>
-                                <div id="subtotal_<?php echo $_id; ?>" name="subtotal[]"><?php echo MONEDA . number_format($subtotal, 2, '.', ','); ?></div>
+                                <div id="subtotal_<?php echo $_id; ?>" name="subtotal[]"><?php echo MONEDA . ' ' . number_format($subtotal, 2, '.', ','); ?></div>
                             </td>
                             <td>
-                                <a id="eliminar" class="btn btn-warning btn-sm" data-bs-id="<?php echo $_id; ?>" data-bs-toggle="modal" data-bs-target="#eliminaModal"><i class="fa-solid fa-trash"></i> Eliminar</a>
+                                <a id="eliminar" class="btn btn-danger btn-sm" data-bs-id="<?php echo $_id; ?>" data-bs-toggle="modal" data-bs-target="#eliminaModal"><i class="fa-solid fa-trash"></i></a>
                             </td>
                         </tr>
                         <?php } ?>
-
+                                
                         <tr>
                             <td colspan="3"></td>
                             <td colspan="2">
-                                <p class="h3" id="total"><?php echo MONEDA . number_format($total, 2, '.', ','); ?></p>
+                                <p class="h3" id="total"><?php echo MONEDA . ' ' . number_format($total, 2, '.', ','); ?></p>
                             </td>
                         </tr>
 
@@ -107,9 +107,9 @@ if($productos != null){
             <div class="row">
                 <div class="col-md-5 offset-md-7 d-grid gap-2">
                     <?php if(isset($_SESSION['user_cliente'])){ ?>
-                        <a href="pago.php" class="btn btn-primary btn-lg">Realizar pago</a>
+                        <a href="pago.php" class="btn btn-primary btn-lg"><i class="fa-solid fa-cash-register"></i> Realizar pago</a>
                     <?php } else { ?>
-                        <a href="login.php?pago" class="btn btn-primary btn-lg">Realizar pago</a>
+                        <a href="login.php?pago" class="btn btn-primary btn-lg"><i class="fa-solid fa-cash-register"></i> Realizar pago</a>
                     <?php } ?>
 
                 </div>

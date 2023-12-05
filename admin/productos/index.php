@@ -27,9 +27,9 @@ $productos = $resultado->fetchAll(PDO::FETCH_ASSOC);
 <main>
     <div class="container-fluid px-4">
         <h2 class="mt-3">Productos</h2>
-
+        <br>
         <a href="nuevo.php" class="btn btn-primary" >Nuevo</a>
-
+        <br>
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>

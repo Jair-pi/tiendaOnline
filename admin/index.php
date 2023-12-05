@@ -44,7 +44,7 @@ if(!empty($_POST)){
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
-    <body class="bg-primary">
+    <body class="bg-dark">
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -67,8 +67,8 @@ if(!empty($_POST)){
                                                 <?php echo mostrarMensajes($errors); ?>
 
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="password.html">Forgot Password?</a>
-                                                <button type="submit" class="btn btn-primary">Login</button>
+                                                <p class="badge bg-danger">Acceso solo Administrador</p>
+                                                <button type="submit" class="btn btn-primary">Ingresar</button>
                                             </div>
                                         </form>
                                     </div>
@@ -79,10 +79,10 @@ if(!empty($_POST)){
                 </main>
             </div>
             <div id="layoutAuthentication_footer">
-                <footer class="py-4 bg-light mt-auto">
+                <footer class="py-4 bg-darck mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                            <div class="text-muted">Romedil Computer &copy; Nuestro sitio web 2023</div>
                         </div>
                     </div>
                 </footer>

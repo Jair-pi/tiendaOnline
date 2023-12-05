@@ -72,7 +72,7 @@ $sqlDetalle->execute([$idCompra]);
                                 <tr>
                                     <th>Producto</th>
                                     <th>Precio</th>
-                                    <th>cantidad</th>
+                                    <th>Cantidad</th>
                                     <th>Subtotal</th>
                                     <th></th>
                                 </tr>

@@ -81,7 +81,7 @@ unset($_SESSION['carrito']);
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>cantidad</th>
+                                <th>Cantidad</th>
                                 <th>Producto</th>
                                 <th>Importe</th>
                             </tr>
@@ -93,7 +93,7 @@ unset($_SESSION['carrito']);
                                 <tr>
                                     <td><?php echo $row_det['cantidad']; ?></td>
                                     <td><?php echo $row_det['nombre']; ?></td>
-                                    <td><?php echo $importe; ?></td>
+                                    <td><?php echo MONEDA . number_format($importe, 2, '.', ','); ?></td>
                                 </tr>
                                 <?php } ?>
                                 
