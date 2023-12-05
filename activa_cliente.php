@@ -8,7 +8,7 @@ require_once 'clases/clienteFunciones.php';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
 $token = isset($_GET['token']) ? $_GET['token'] : '';
 
-if($id == '' || $token == ''){
+if ($id == '' || $token == '') {
     header("Location: index.php");
     exit;
 }
@@ -20,3 +20,10 @@ echo validaToken($id, $token, $con);
 
 
 ?>
+
+
+<br>
+
+<button class="btn btn-success">
+    <a href="index.php">Retornar a la pagina principal</a>
+</button>
