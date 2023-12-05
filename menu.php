@@ -22,9 +22,9 @@
                             <a href="#" class="nav-link active">Catalogo</a>
                         </li>
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="#" class="nav-link">Categoria</a>
-                        </li>
+                        </li> -->
                     </ul>
                         <a href="checkout.php" class="btn btn-primary btn-sm me-2"><i class="fa-solid fa-cart-shopping"></i> 
                             Carrito <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
