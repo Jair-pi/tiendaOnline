@@ -212,15 +212,15 @@ integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+
             locale: 'es-PE'
         });
 
-        mp.checkout({
-            preference: {
-                id: '<?php echo $preference->id; ?>'
-            },
-            render: {
-                container: '.checkout-btn',
-                label: 'Pagar con Mercado Pago'
-            }
-        })
+        // mp.checkout({
+        //     preference: {
+        //         id: '<?php echo $preference->id; ?>'
+        //     },
+        //     render: {
+        //         container: '.checkout-btn',
+        //         label: 'Pagar con Mercado Pago'
+        //     }
+        // })
 
     </script>
 
