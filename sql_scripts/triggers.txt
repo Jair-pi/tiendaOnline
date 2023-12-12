@@ -1,0 +1,11 @@
+
+/*Trigger(disparador) para eliminar cada regitro de detalle de compra asociado a la compra
+que deseamos eliminar, antes de que este se elimine
+*/
+DELIMITER $$
+CREATE OR REPLACE TRIGGER deleteCompra
+BEFORE DELETE
+ON compra FOR EACH ROW
+BEGIN
+	DELETE FROM detalle_compra WHERE id_compra = old.id;
+END

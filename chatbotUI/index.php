@@ -13,7 +13,7 @@
     <div class="container_chatbot chat_collapse" id="chatUI">
         <div class="row">
             <div class="col-lg-12">
-                <div class="card chat-app">
+                <div class="card card_chatbot">
                     <div class="chat">
                         <!--cabecera del chat-->
                         <div class="chat-header clearfix" id="chat_header">

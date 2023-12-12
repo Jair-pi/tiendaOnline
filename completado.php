@@ -58,6 +58,8 @@ unset($_SESSION['carrito']);
     <main>
         <!--Contenido-->
         <div class="container">
+
+        <h2>Compra realizada con éxito!</h2>
         
         <?php if(strlen($error) > 0) { ?>
             <div class="row">
@@ -93,7 +95,7 @@ unset($_SESSION['carrito']);
                                 <tr>
                                     <td><?php echo $row_det['cantidad']; ?></td>
                                     <td><?php echo $row_det['nombre']; ?></td>
-                                    <td><?php echo MONEDA . number_format($importe, 2, '.', ','); ?></td>
+                                    <td><?php echo MONEDA ." ". number_format($importe, 2, '.', ','); ?></td>
                                 </tr>
                                 <?php } ?>
                                 
